@@ -16,6 +16,7 @@ import {
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
+// Fungsi Utama
 const Main = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -39,7 +40,7 @@ const Main = () => {
                 tanda={content.tanda}
                 key={increment}
                 jenis={content.jenis}
-                color={content.color}
+                warna={content.warna}
                 onPress={content.onPress}
               />
             );
@@ -116,7 +117,46 @@ const styles = StyleSheet.create({
   },
 });
 
+// Region Formulir Pendaftaran
+
+interface IFormulirPendaftaran {
+  nama: string;
+  email: string;
+  telepon: string;
+  alamat: string | undefined;
+  hobi: string | undefined;
+}
+
 const FormulirPendaftaran = () => {
+  const fungsiFormulirPendaftaran = (parameterNya: IFormulirPendaftaran) => {
+    Alert.alert(
+      'Success',
+      'Hallo : ' +
+        parameterNya.nama +
+        ' dengan email ' +
+        parameterNya.email +
+        '.\n Anda sudah terdaftar dengan nomor Telepon : ' +
+        parameterNya.telepon +
+        '.\n Di alamat : ' +
+        parameterNya.alamat +
+        '.\n Untuk mereset password, hobi anda adalah : ' +
+        parameterNya.hobi,
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            console.log('OK Pressed');
+            setNama('');
+            setEmail('');
+            setTelepon('');
+            setAlamat('');
+            setHobi('');
+          },
+        },
+      ],
+    );
+  };
+
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
     backgroundColor: isDarkMode ? 'black' : 'white',
@@ -170,35 +210,9 @@ const FormulirPendaftaran = () => {
           // Requirement:
           // - [DONE] buat sebuah function yang apabila dipanggil
           //   menampilkan Alert dengan message isian dari form ini
-          // - mengimplementasikan interface sesuai dengan tipe data masing-masing input
+          // - [DONE] mengimplementasikan interface sesuai dengan tipe data masing-masing input
           // - [DONE] setelah selesai menampilkan Alert, clear semua input
-
-          Alert.alert(
-            'Success',
-            'Hallo : ' +
-              nama +
-              ' dengan email ' +
-              email +
-              '. Anda sudah terdaftar dengan nomor Telepon : ' +
-              telepon +
-              ' di alamat : ' +
-              alamat +
-              '. Untuk mereset password, hobi anda adalah : ' +
-              hobi,
-            [
-              {
-                text: 'OK',
-                onPress: () => {
-                  console.log('OK Pressed');
-                  setNama('');
-                  setEmail('');
-                  setTelepon('');
-                  setAlamat('');
-                  setHobi('');
-                },
-              },
-            ],
-          );
+          fungsiFormulirPendaftaran({nama, email, telepon, alamat, hobi});
         }}
         title="Submit"
       />
@@ -206,6 +220,7 @@ const FormulirPendaftaran = () => {
   );
 };
 
+// Region Matematika
 interface IMatematika {
   jenis: 'Penjumlahan' | 'Pengurangan' | 'Perkalian' | 'Pembagian';
   onPress: (result: number) => void;
