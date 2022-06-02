@@ -228,21 +228,26 @@ interface IMatematika {
   tanda: string;
 }
 
-const Matematika = (param: IMatematika) => {
+interface Iinput {
+  input1: number;
+  input2: number;
+}
+
+const Matematika = (paramLoop: IMatematika, paramInput : Iinput) => {
   const [input1, setInput1] = useState<string>('');
   const [input2, setInput2] = useState<string>('');
 
   return (
     <View style={styles.container}>
       <View style={styles.containerMatematika}>
-        <Text style={[styles.title, {color: param.warna}]}>
-          Matematika {param.jenis}
+        <Text style={[styles.title, {color: paramLoop.warna}]}>
+          Matematika {paramLoop.jenis}
         </Text>
         <View style={styles.row}>
           <View style={styles.inputWrap}>
             <TextInput
               style={styles.textInputNumberSmall}
-              value={input1}
+              value={Iinput.input1}
               placeholder="Angka 1"
               keyboardType={
                 Platform.OS === 'android' ? 'numeric' : 'number-pad'
@@ -250,7 +255,7 @@ const Matematika = (param: IMatematika) => {
               onChangeText={val => setInput1(val.replace(/[^0-9]/g, ''))}
             />
             <View>
-              <Text style={styles.labelCenter}>{param.tanda}</Text>
+              <Text style={styles.labelCenter}>{paramLoop.tanda}</Text>
             </View>
             <TextInput
               style={styles.textInputNumberSmall}
@@ -267,7 +272,7 @@ const Matematika = (param: IMatematika) => {
                 let inputNumber: number = +input1;
                 let inputNumber2: number = +input2;
 
-                switch (param.jenis) {
+                switch (paramLoop.jenis) {
                   case 'Penjumlahan':
                     total = inputNumber + inputNumber2;
                     break;
